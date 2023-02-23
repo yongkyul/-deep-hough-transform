@@ -1,17 +1,20 @@
 DATA:
+    #DIR: "data/training/"
+    #VAL_DIR: "data/training/"
+    #TEST_DIR: "data/NKL"
+    #LABEL_FILE: "data/training/nkl_train.txt"
+    #VAL_LABEL_FILE: "data/training/nkl_val.txt"
+    #TEST_LABEL_FILE: "data/training/nkl_test.txt"
     DIR: "data/training/"
     VAL_DIR: "data/training/"
-    TEST_DIR: "data/NKL"
-    LABEL_FILE: "data/training/nkl_train.txt"
-    VAL_LABEL_FILE: "data/training/nkl_val.txt"
-    TEST_LABEL_FILE: "data/training/nkl_test.txt"
-    # DIR: "data/training/"
-    # VAL_DIR: "data/training/"
-    # TEST_DIR: "data/training"
-    # LABEL_FILE: "data/training/train_1716_100_100.txt"
-    # VAL_LABEL_FILE: "data/training/test_1716_100_100.txt"
-    # TEST_LABEL_FILE: "data/training/test_1716_100_100.txt"
-    BATCH_SIZE: 8
+    #TEST_DIR: "data/training/"
+    TEST_DIR: "data/"
+    LABEL_FILE: "data/training/agriNav_train.txt"
+    VAL_LABEL_FILE: "data/training/agriNav_test.txt"
+    #VAL_LABEL_FILE: "data/training/test_1716_100_100.txt"
+    #TEST_LABEL_FILE: "data/training/test_1716_100_100.txt"
+    TEST_LABEL_FILE: "data/agriNav_test_idx.txt"
+    BATCH_SIZE: 1
     WORKERS: 4
 
 OPTIMIZER:
@@ -40,4 +43,4 @@ TRAIN:
     RESUME: 
 
 MISC:
-    TMP: "./result/reproduce"
+    TMP: "./result/custom_agriNav/reproduce"
