@@ -1,10 +1,4 @@
-LaTeX/
+
 __pycache__
-data/SEL_dataset
-data/AgroNav Inference Results (ViT-Adapter)
-data/agriNav_data/**
-data/training
-data/ICCV2017_JTLEE_gt_pri_lines_for_test
-data/ICCV2017_JTLEE_gtlines_all
-data/ICCV2017_JTLEE_images
-result/**
+data/ignored scripts
+README_original.md

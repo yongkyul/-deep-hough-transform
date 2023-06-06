@@ -7,13 +7,12 @@ DATA:
     #TEST_LABEL_FILE: "data/training/nkl_test.txt"
     DIR: "data/training/"
     VAL_DIR: "data/training/"
-    #TEST_DIR: "data/training/"
-    TEST_DIR: "data/"
-    LABEL_FILE: "data/training/agriNav_train.txt"
-    VAL_LABEL_FILE: "data/training/agriNav_test.txt"
+    TEST_DIR: "data/inference/"
+    LABEL_FILE: "data/training/agroNav_LineDetection_train.txt"
+    VAL_LABEL_FILE: "data/training/agroNav_LineDetection_val.txt"
     #VAL_LABEL_FILE: "data/training/test_1716_100_100.txt"
     #TEST_LABEL_FILE: "data/training/test_1716_100_100.txt"
-    TEST_LABEL_FILE: "data/agriNav_test_idx.txt"
+    TEST_LABEL_FILE: "data/inference/test_idx.txt"
     BATCH_SIZE: 1
     WORKERS: 4
 
@@ -28,13 +27,14 @@ MODEL:
     NUMANGLE: 100
     NUMRHO: 100
     FIX: True
-    THRESHOLD: 0.01
+    #THRESHOLD: 0.01
+    THRESHOLD: 0.1
     EDGE_ALIGN: False
     BACKBONE: resnet50 
     # only support : resnet18, resnet50, resnet101, mobilenetv2, resnext50, res2net50, vgg16
 
 TRAIN:
-    EPOCHS: 30
+    EPOCHS: 100
     PRINT_FREQ: 100
     TEST: False
     SEED: 1997
@@ -43,4 +43,4 @@ TRAIN:
     RESUME: 
 
 MISC:
-    TMP: "./result/custom_agriNav/reproduce"
+    TMP: "./result/agroNav_LineDetection/reproduce"

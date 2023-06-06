@@ -1,18 +1,8 @@
 <h1 style="align: center; color: #159957">Deep Hough Transform for Semantic Line Detection</h1>
 
-Jittor and Pytorch code accompanying the paper "Deep Hough Transform for Semantic Line Detection" (ECCV 2020, PAMI 2021).
+Link to original Github of Deep Hough Transform (https://github.com/Hanqer/deep-hough-transform).
+Link to paper "Deep Hough Transform for Semantic Line Detection" (ECCV 2020, PAMI 2021).
 [arXiv2003.04676](https://arxiv.org/abs/2003.04676) | [Online Demo](http://mc.nankai.edu.cn/dht) | [Project page](http://mmcheng.net/dhtline) | [New dataset](http://kaizhao.net/nkl) | [Line Annotator](https://github.com/Hanqer/lines-manual-labeling)
-
-
-
-### Updates
-* Thanks [@HassanBinHaroon](https://github.com/HassanBinHaroon) for the Google Colab implementation of our paper: <https://github.com/HassanBinHaroon/deep-hough-transform>. You can run it anywhere with Google colab.
-* Training code is open available now.
-* Jittor inference code is open available now.
-
-
-### Deep Hough Transform
-![pipeline](./pipeline.png)
 
 ### Requirements
 ``` 
@@ -36,44 +26,55 @@ cd model/_cdht
 python setup.py build 
 python setup.py install --user
 ```
-Pretrain models (based on ResNet50-FPN): <https://kaizhao.net/deep-hough-transform/dht_r50_fpn_sel-c9a29d40.pth> (SEL dataset) and 
-<https://kaizhao.net/deep-hough-transform/dht_r50_nkl_d97b97138.pth> (NKL dataset / used in online demo)
 
-### Prepare training data
-Download original SEL dataset from [here](https://mcl.korea.ac.kr/research/Submitted/jtlee_slnet/ICCV2017_JTLEE_dataset.7z) and extract to `data/` directory. After that, the directory structure should be like:
-```
-data
-├── ICCV2017_JTLEE_gtlines_all
-├── ICCV2017_JTLEE_gt_pri_lines_for_test
-├── ICCV2017_JTLEE_images
-├── prepare_data_JTLEE.py
-├── Readme.txt
-├── test_idx_1716.txt
-└── train_idx_1716.txt
-```
+### Training on Custom AgroNav Data
+1. Download the AgroNav_LineDetection dataset from [here](https://drive.google.com/file/d/1MPaQVXCWcpGZT5Kfe3fOYBoR3PYghjt9/view?usp=sharing) and extract to `data/` directory. The dataset contains images and ground truth annotations of the semantic lines. The images are the outputs of the semantic segmentation model. Each image contains a pair of semantic lines.
 
-Then run python script to generate parametric space label.
+2. Run the following lines for data augmentation and generation of the parametric space labels.
 ```sh
 cd deep-hough-transform
-python data/prepare_data_JTLEE.py --root './data/ICCV2017_JTLEE_images/' --label './data/ICCV2017_JTLEE_gtlines_all' --save-dir './data/training/JTLEE_resize_100_100/' --list './data/training/JTLEE.lst' --prefix 'JTLEE_resize_100_100' --fixsize 400 --numangle 100 --numrho 100
-```
-For NKL dataset, you can download the dataset and put it to data dir. Then run python script to generate parametric space label.
-```sh
-cd deep-hough-transform
-python data/prepare_data_NKL.py --root './data/NKL' --label './data/NKL' --save-dir './data/training/NKL_resize_100_100' --fixsize 400
+python data/prepare_data_NKL.py --root './data/agroNav_LineDetection' --label './data/agroNav_LineDetection' --save-dir './data/training/agroNav_LineDetection_resized_100_100' --fixsize 400 
 ```
 
-### Training
-Following the default config file 'config.yml', you can arbitrarily modify hyperparameters.
-Then, run the following command.
+3. Run the following script to obtain a list of filenames of the training data. 
+```sh
+python data/extractFilenameList.py
+```
+This creates a .txt file with the filenames inside /training. Divide the filenames into train and validation data.
+```sh
+agroNav_LineDetection_train.txt
+agroNav_LineDetection_val.txt
+```
+
+4. Specify the training and validation data paths in config.yml.
+
+5. Train the model.
 ```sh
 python train.py
 ```
 
-### Testing
-Please refer to [test](./test.md) for detailed steps to reproduce the testing results.
+### Inference
+1. Move images to data/inference/input/
 
-### Citation
+2. Run the following script to obtain a list of filenames of the testing data. This creates a .txt file with the filenames inside data/inference/
+```sh
+python data/inference/extractFilenameList.py
+```
+
+3. Specify the testing data paths in config.yml.
+
+4. Run the following script for inference
+```sh
+python forward.py --model ./result/agroNav_LineDetection/reproduce/model_best.pth --tmp ./data/inference/output/
+```
+
+5. Visualize the centerlines.
+```sh
+python data/inference/visualizeCenterline.py 
+```
+The visualizations are saved in ./data/inference/centerline_visualized
+
+<!-- ### Citation
 If our method/dataset are useful to your research, please consider to cite us:
 ```
 @article{zhao2021deep,
@@ -96,5 +97,5 @@ If our method/dataset are useful to your research, please consider to cite us:
 
 ### License
 This project is licensed under the [Creative Commons NonCommercial (CC BY-NC 3.0)](https://creativecommons.org/licenses/by-nc/3.0/) license where only
-non-commercial usage is allowed. For commercial usage, please contact us.
+non-commercial usage is allowed. For commercial usage, please contact us. -->
 

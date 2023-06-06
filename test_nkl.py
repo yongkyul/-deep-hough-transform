@@ -3,7 +3,7 @@ import numpy as np
 import os
 from hungarian_matching import caculate_tp_fp_fn
 
-gt_path = './data/training/SL5K_resize_100_100'
+#gt_path = './data/training/SL5K_resize_100_100'
 #gt_path = '/home/hanqi/work/semantic/data/crawl/JTLEE_resize_100_100'
 parser = argparse.ArgumentParser(description='PyTorch Semantic-Line Training')
 parser.add_argument('--pred', type=str, required=True)
